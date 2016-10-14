@@ -19,7 +19,6 @@ public class NotificationCenterHandler {
     @OnWebSocketConnect
     public void onConnect(Session user) throws Exception {
         System.out.println("Session connected");
-        System.out.println(sessions.size());
         sessions.add(user);
     }
 

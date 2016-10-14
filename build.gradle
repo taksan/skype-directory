@@ -1,11 +1,6 @@
-
-// Apply the java plugin to add support for Java
 apply plugin: 'java'
 
-// In this section you declare where to find the dependencies of your project
 repositories {
-    // Use 'jcenter' for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
 
@@ -21,9 +16,9 @@ dependencies {
 
 task fatJar(type: Jar) {
 	manifest {
-		attributes 'Implementation-Title': 'A spark of life',
+		attributes 'Implementation-Title': 'Skype Directory for Octane Skype',
 			'Implementation-Version': '1.0',
-			'Main-Class': 'org.taksan.SparkHello'
+			'Main-Class': 'org.taksan.SkypeDirectory'
 	}
 	baseName = project.name + '-all'
 	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }

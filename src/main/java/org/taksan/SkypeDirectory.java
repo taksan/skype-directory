@@ -37,24 +37,24 @@ public class SkypeDirectory {
 	        return (groups);
         }, new JsonTransformer());
 	    
-		get("/groups/:gid", (req, res) -> {
-		    if (groups.get(req.params(":gid")) == null)
+		get("/groups/:threadId", (req, res) -> {
+		    if (groups.get(req.params(":threadId")) == null)
 		        return new Object();
-		    return groups.get(req.params(":gid"));
+		    return groups.get(req.params(":threadId"));
 		}, new JsonTransformer());
 		
         post("/groups/", "application/json", (req, res) -> {
             SkypeEntry entry = gson.fromJson(req.body(), SkypeEntry.class);
-            groups.put(entry.gid, entry);
+            groups.put(entry.threadId, entry);
             save();
             NotificationCenterHandler.notifyGroupAdded(entry);
             
             return entry;
         }, new JsonTransformer());
         
-        put("/groups/:gid", "application/json", (req, res) -> {
+        put("/groups/:threadId", "application/json", (req, res) -> {
             SkypeEntry data = gson.fromJson(req.body(), SkypeEntry.class);
-            SkypeEntry updatedEntry = groups.get(req.params(":gid"));
+            SkypeEntry updatedEntry = groups.get(req.params(":threadId"));
             if (updatedEntry != null)
                 updatedEntry.name = data.name;
             save();
@@ -62,9 +62,9 @@ public class SkypeDirectory {
             return "";
         });
         
-        delete("/groups/:gid", (req, res) -> {
-            SkypeEntry removedEntry = groups.get(req.params(":gid"));
-            groups.remove(req.params(":gid"));
+        delete("/groups/:threadId", (req, res) -> {
+            SkypeEntry removedEntry = groups.get(req.params(":threadId"));
+            groups.remove(req.params(":threadId"));
             save();
             NotificationCenterHandler.notifyGroupRemoved(removedEntry);
             return "";
