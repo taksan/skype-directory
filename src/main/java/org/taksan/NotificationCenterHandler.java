@@ -17,14 +17,12 @@ public class NotificationCenterHandler {
     private static List<Session> sessions = new LinkedList<>();
     
     @OnWebSocketConnect
-    public void onConnect(Session user) throws Exception {
-        System.out.println("Session connected");
+    public synchronized void onConnect(Session user) throws Exception {
         sessions.add(user);
     }
 
     @OnWebSocketClose
-    public void onClose(Session user, int statusCode, String reason) {
-        System.out.println("Session disconnected");
+    public synchronized void onClose(Session user, int statusCode, String reason) {
         sessions.remove(user);
     }
     
