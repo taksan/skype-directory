@@ -31,6 +31,7 @@ public class NotificationCenterHandler {
     }
 
     public static void notifyGroupRemoved(SkypeEntry entry) {
+        if (entry == null) return;
         sendNotification("DELETED", new EntryEvent(entry));
     }
 
