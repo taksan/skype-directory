@@ -40,14 +40,19 @@ public class NotificationCenterHandler {
     }
 
     public static void sendNotification(String string, EntryEvent entryEvent) {
-        entryEvent.operation = string;
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        sessions.stream().forEach(session -> {
-            try {
-                session.getRemote().sendString(gson.toJson(entryEvent));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+        try {
+            entryEvent.operation = string;
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            sessions.stream().forEach(session -> {
+                try {
+                    session.getRemote().sendString(gson.toJson(entryEvent));
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

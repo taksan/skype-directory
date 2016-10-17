@@ -20,9 +20,12 @@ public class Directory extends HashMap<String, SkypeEntry>{
     }
     
     public synchronized SkypeEntry put(SkypeEntry value) {
+        if (value.threadId.equals("")) 
+            throw new RuntimeException("threadId cannot be empty");
+        
         SkypeEntry entry = super.put(value.threadId, value);
         save();
-        NotificationCenterHandler.notifyGroupAdded(entry);
+        NotificationCenterHandler.notifyGroupAdded(get(value.threadId));
         return entry;
     }
     

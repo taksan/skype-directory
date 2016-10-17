@@ -1,5 +1,6 @@
 package org.taksan;
 
+import static spark.Spark.before;
 import static spark.Spark.delete;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -22,6 +23,18 @@ public class SkypeDirectory {
 	    groups = Directory.loadStoredGroups();
 	    
 	    Spark.webSocket("/wsocket", NotificationCenterHandler.class);
+	    
+	    before((req,res) -> {
+	        System.out.println(req.uri());
+	        if (req.params() != null)
+	            System.out.println(gson.toJson(req.params()));
+	        System.out.println(req.requestMethod());
+	        System.out.println(req.body());
+	    });
+	    
+	    Spark.exception(Exception.class, (ex, req, res) -> {
+	        ex.printStackTrace();
+	    });
 	    
         get("/groups/", (req, res) -> 
             groups, 
